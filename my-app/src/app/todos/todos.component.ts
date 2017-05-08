@@ -13,17 +13,15 @@ import asteroid from '../../common/asteroid';
     todos: any;
     todoObj: any;
     sub: any;
-    count: any;
 
     constructor() {
       this.newTodo = '';
       this.todos = [];
-      this.count = 0;
+      asteroid.call('getTodos').then((data) => {
+        this.todos = data;
+      });
       asteroid.ddp.on('added', ({ collection, id, fields }) => {
         if (collection === 'todo') {
-          console.log(fields);
-          this.count++;
-          console.log(this.count);
             this.todos.push(fields);
         }
       });
@@ -43,8 +41,6 @@ import asteroid from '../../common/asteroid';
     deleteTodo(index) {
       var obj = {};
       obj = this.todos.splice(index, 1)[0];
-      console.log('deleting this obj..');
-      console.log(obj);
       asteroid.call('removeTodo', obj);
     }
 
