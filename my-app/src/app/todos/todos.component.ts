@@ -37,25 +37,15 @@ import asteroid from '../../common/asteroid';
         }
         this.newTodo = '';
         asteroid.call('addTodo', this.todoObj);
-        // .then((result) => {
-        //   console.log('check after calling addtodo');
-        //   console.log(this.todos);
-        //   this.todos.push(this.todoObj);
-        // });
         event.preventDefault();
     }
 
     deleteTodo(index) {
-      this.todos.splice(index, 1);
-    }
-
-    deleteSelectedTodos() {
-      //need ES5 to reverse loop in order to splice by index
-      for(var i=(this.todos.length -1); i > -1; i--) {
-        if(this.todos[i].completed) {
-          this.todos.splice(i, 1);
-        }
-      }
+      var obj = {};
+      obj = this.todos.splice(index, 1)[0];
+      console.log('deleting this obj..');
+      console.log(obj);
+      asteroid.call('removeTodo', obj);
     }
 
   }
